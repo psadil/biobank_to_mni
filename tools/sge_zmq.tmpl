@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#$ -cwd               # Run in the current working directory.
+#$ -j y               # Direct stdout and stderr to the same file.
+#$ -t 1-{{ n_jobs }}
+#$ -l mem_free={{ mem_free | 256M }}
+#$ -l h_vmem={{ mem_free | 256M }}
+#$ -N {{ job_name | 1 }}
+#$ -o /dev/null
+
+module load fsl
+conda activate biobank   
+
+CMQ_AUTH={{ auth }} R --no-save --no-restore -e 'clustermq:::worker("{{ main }}")' # Leave alone.
+
+exit 0 # Leave alone.

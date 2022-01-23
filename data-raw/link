@@ -1,0 +1,15 @@
+#!/bin/bash
+
+ROOT=/dcs04/smart/data/UKBiobank/UKBiobank
+BIDSISH=/fastscratch/myscratch/pssadil/mni
+
+readarray -t subs <avail.txt
+
+for s in "${subs[@]}"; do
+  outfeat=$BIDSISH/sub-"${s}"/ses-2/non-bids/fMRI/tfMRI.feat \
+  && mkdir -p "${outfeat}" \
+  && infeat="${ROOT}"/task_fMRI/${s}_20249_2_0/fMRI/tfMRI.feat \
+  && cp -sr "${infeat}"/reg "${outfeat}"/reg \
+  && cp -sr "${infeat}"/stats "${outfeat}"/stats
+  
+done
